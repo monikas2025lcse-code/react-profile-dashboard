@@ -1,49 +1,39 @@
-import ProfileHeader from "./components/ProfileHeader";
-import SectionCard from "./components/SectionCard";
-import SkillBadge from "./components/SkillBadge";
+import StatBox from "./components/StatBox";
+import TaskCard from "./components/TaskCard";
 
-const skills = [
-  { name: "React", level: "Learning" },
-  { name: "Java", level: "Core" },
-  { name: "Python", level: "Intermediate" },
-  { name: "SQL", level: "Core" },
+const tasks = [
+  { id: 1, title: "Push Repo 1 to GitHub", category: "Git", priority: "High", done: true },
+  { id: 2, title: "Build reusable task components", category: "React", priority: "High", done: false },
+  { id: 3, title: "Design responsive task grid", category: "CSS", priority: "Medium", done: false },
+  { id: 4, title: "Write README documentation", category: "Docs", priority: "Low", done: false },
 ];
 
 export default function App() {
+  const completedCount = tasks.filter((t) => t.done).length;
+
   return (
-    <div className="dashboard-container">
-      <ProfileHeader
-        name="Monika S"
-        role="Computer Science & Data Science Student"
-        location="Tamil Nadu, India"
-        bio="Building modular UI components and practicing clean front-end architecture."
-      />
+    <div className="tracker-app">
+      <header className="tracker-header">
+        <div>
+          <h1>Daily Task Tracker</h1>
+          <p>Organizing tasks with reusable cards & two-column layout</p>
+        </div>
+        <div className="stats-row">
+          <StatBox label="Total Tasks" value={tasks.length} />
+          <StatBox label="Completed" value={completedCount} />
+        </div>
+      </header>
 
-      <main className="dashboard-grid">
-        <SectionCard
-          title="Technical Skills"
-          subtitle="Reusable badge components rendered from data"
-        >
-          <div className="badge-group">
-            {skills.map((skill) => (
-              <SkillBadge
-                key={skill.name}
-                label={skill.name}
-                level={skill.level}
-              />
-            ))}
-          </div>
-        </SectionCard>
-
-        <SectionCard
-          title="Assignment Focus"
-          subtitle="Component organization & layout structure"
-        >
-          <p>
-            Each repository in this assignment showcases distinct reusable
-            components, custom layouts, and organized folder structure.
-          </p>
-        </SectionCard>
+      <main className="task-grid">
+        {tasks.map((task) => (
+          <TaskCard
+            key={task.id}
+            title={task.title}
+            category={task.category}
+            priority={task.priority}
+            done={task.done}
+          />
+        ))}
       </main>
     </div>
   );
